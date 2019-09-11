@@ -10,9 +10,9 @@ import pkgEnum.eRank;
  */
 public class CardRankCount implements Comparable<CardRankCount> {
 
-	private eRank eRank;
-	private int iCnt;
-	private int iCardPosition;
+	private eRank eRank;//rank
+	private int iCnt;//count
+	private int iCardPosition;//position
 
 	public CardRankCount(pkgEnum.eRank eRank, int iCnt, int iCardPosition) {
 		super();

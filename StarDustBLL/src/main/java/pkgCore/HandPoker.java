@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumSet;
 
 import pkgEnum.eCardNo;
 import pkgEnum.eHandStrength;
@@ -141,7 +142,7 @@ public class HandPoker extends Hand implements Comparable {
 
 			Object o = null;
 
-			for (eHandStrength eHandStrength : eHandStrength.values()) {
+			for (eHandStrength eHandStrength : eHandStrength.values()) {//going to run each one of the evaluation methods below and stops when it hits true, and then gets the score of the method that evaluated to true
 				String strEvalMethod = eHandStrength.getEvalMethod();
 				Method mEval = c.getDeclaredMethod(strEvalMethod, null);
 				mEval.setAccessible(true);
@@ -239,7 +240,7 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is a Royal Flush
 	 * 
 	 */
-	private boolean isRoyalFlush() {
+	private boolean isRoyalFlush() {//isstraightflush should be true, and use a private attribute (bool)-to check if it's a high A straight(not a method where A is a lower value), so you can have isFlush and the bool be true?
 
 		boolean bIsRoyalFlush = false;
 		// TODO - Complete implementation for this method.
@@ -256,8 +257,12 @@ public class HandPoker extends Hand implements Comparable {
 	private boolean isStraightFlush() {
 		boolean bisStraightFlush = false;
 		// TODO - Complete implementation for this method.
-		if isStraight= true && isFlush=true;
-		return bisStraightFlush;
+		
+		
+		if((isStraight()) &&(isFlush())) {
+			bisStraightFlush = true;
+		}
+			return bisStraightFlush;
 	}
 
 	/**
@@ -267,9 +272,9 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is a Four of a kind
 	 * 
 	 */
-	private boolean isFourOfAKind() {
+	private boolean isFourOfAKind() {//frequency of a card matters
 		boolean bisFourOfAKind = false;
-		if ((GetCRCSize() == eRowCount.FOUR.getiRowCountItems()) && (GetCRCCount(eRow.ONE.ordinal()) == 2)) {
+		if ((GetCRCSize() == eRowCount.TWO.getiRowCountItems()) && (GetCRCCount(eRow.ONE.ordinal()) == 4)) {
 			HandScorePoker HSP = (HandScorePoker) this.getHS();
 			HSP.seteHandStrength(eHandStrength.FourOfAKind);
 			HSP.setHiCard(this.getCards().get(this.getCRC().get(eRow.ONE.ordinal()).getiCardPosition()));
@@ -288,7 +293,8 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is a Full House
 	 * 
 	 */
-	private boolean isFullHouse() {
+	private boolean isFullHouse() {//high card is the one that repeats three times, low card is two times
+		//frequency of a card matters
 		boolean bisFullHouse = false;
 		// TODO - Complete implementation for this method.
 		return bisFullHouse;
@@ -301,11 +307,25 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is a Flush
 	 * 
 	 */
-	private boolean isFlush() {
+	private boolean isFlush() {//four kickers, each have to be in highest to lowest order, use compareto method to compare values
 		boolean bisFlush = false;
 		// TODO - Complete implementation for this method.
-		return bisFlush;
+		int iCount =0;
+		for (eSuit eSuit : EnumSet.range(eSuit.HEARTS, eSuit.SPADES)) {
+		for(Card c: this.getCards()) {
+			if(eSuit == c.geteSuit()) {
+				iCount++;
+			}
+		}
+		if(iCount == 5) {
+			bisFlush = true;
+			break;
+		}
+		else if(iCount >0)
+			break;
 	}
+		return bisFlush;
+ }
 
 	/**
 	 * @author BRG
@@ -314,7 +334,7 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is a Straight
 	 * 
 	 */
-	private boolean isStraight() {
+	private boolean isStraight() {//Ace is treated at the lowest card in terms of a straight
 		boolean bisStraight = false;
 		// TODO - Complete implementation for this method.
 		return bisStraight;
@@ -327,7 +347,7 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is a Three of a Kind
 	 * 
 	 */
-	private boolean isThreeOfAKind() {
+	private boolean isThreeOfAKind() {//frequency of a card matters
 		boolean bisThreeOfAKind = false;
 
 		if ((GetCRCSize() == eRowCount.THREE.getiRowCountItems()) && (GetCRCCount(eRow.ONE.ordinal()) == 3)) {
@@ -349,7 +369,7 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is two pair
 	 * 
 	 */
-	private boolean isTwoPair() {
+	private boolean isTwoPair() {//frequency of a card matters
 		boolean bisTwoPair = false;
 		// TODO - Complete implementation for this method.
 		return bisTwoPair;
@@ -362,7 +382,7 @@ public class HandPoker extends Hand implements Comparable {
 	 * @return 'true' if Hand is a pair
 	 * 
 	 */
-	private boolean isPair() {
+	private boolean isPair() {//frequency of a card matters
 
 		boolean bisPair = false;
 		// TODO - Complete implementation for this method.

@@ -2,8 +2,8 @@ package pkgEnum;
 
 public enum eHandStrength {
 
-	RoyalFlush(100, "isRoyalFlush") {
-		public String toString() {
+	RoyalFlush(100, "isRoyalFlush") { //hand strength
+		public String toString() {//Eval method is the method in HandPoker
 			return "Royal Flush";
 		}
 	},
