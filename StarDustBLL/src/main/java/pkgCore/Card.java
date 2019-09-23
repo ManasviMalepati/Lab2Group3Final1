@@ -15,7 +15,8 @@ import pkgEnum.eSuit;
  *
  */
 public class Card implements Comparable {
-
+//Comparable is an interface, implement means that you have to implement
+	//every method in that interface(an interface is part of java)
 	/**
 	 * @version Lab #1
 	 * @since Lab #1
